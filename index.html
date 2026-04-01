@@ -4,18 +4,21 @@
   <meta charset="UTF-8">
   <title>Time Travel Timeline</title>
   <link rel="stylesheet" href="fetch.css">
+  <script src="fetch.js"></script>
 </head>
 <body>
+  <header>
+    <h1>⏳ Time Travel Timeline</h1>
+    <nav>
+      <a href="about.html">About</a>
+      <a href="favorites.html">Favorites</a>
+    </nav>
+  </header>
 
-  <h1>⏳ Time Travel Timeline</h1>
-
-  <input type="number" id="yearInput" placeholder="Enter year (e.g., 1990)" />
-  <button onclick="handleSearch()">Search</button>
-
-  <p id="loading" style="display:none;">Loading...</p>
-
-  <div id="timeline"></div>
-
-  <script src="fetch.js"></script>
+  <main>
+    <p>Enter a year to explore historical events:</p>
+    <input type="number" id="yearInput" placeholder="e.g., 1990" />
+    <button id="startBtn">Start Time Travel</button>
+  </main>
 </body>
 </html>

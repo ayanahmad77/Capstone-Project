@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Timeline</title>
+  <link rel="stylesheet" href="fetch.css">
+</head>
+<body>
+  <header>
+    <h1>Timeline of <span id="yearDisplay"></span></h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="favorites.html">Favorites</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <input type="text" id="searchInput" placeholder="Search events..." />
+    <button id="sortBtn">Sort Asc/Desc</button>
+    <p id="loading" style="display:none;">Loading...</p>
+    <div id="timeline"></div>
+  </main>
+
+  <script src="script-timeline.js"></script>
+</body>
+</html>

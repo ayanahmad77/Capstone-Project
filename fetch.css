@@ -1,16 +1,43 @@
 body {
-  font-family: Arial;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
   text-align: center;
-  margin: 20px;
+  background: #f5f5f5;
+  color: #333;
 }
 
-#timeline {
-  margin-top: 20px;
+header {
+  background: #00bcd4;
+  color: white;
+  padding: 15px;
 }
 
-.event {
+header nav a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+input, button {
+  margin: 10px;
+  padding: 8px 12px;
+  font-size: 16px;
+}
+
+#timeline .event {
   border-left: 3px solid #00bcd4;
-  margin: 15px;
-  padding-left: 10px;
+  margin: 20px auto;
+  padding-left: 15px;
+  width: 80%;
   text-align: left;
+}
+
+.dark-mode {
+  background: #222;
+  color: #eee;
+}
+
+.dark-mode header {
+  background: #444;
 }

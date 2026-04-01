@@ -1,21 +1,12 @@
-const timeline = document.getElementById("timeline");
-const loading = document.getElementById("loading");
-
-async function fetchEvents() {
-  try {
-    loading.style.display = "block";
-
-    const response = await fetch("https://history.muffinlabs.com/date");
-    const data = await response.json();
-
-    loading.style.display = "none";
-
-    return data.data.Events;
-  } catch (error) {
-    loading.style.display = "none";
-    timeline.innerHTML = "<p>Error fetching data</p>";
+document.getElementById("startBtn")?.addEventListener("click", () => {
+  const year = document.getElementById("yearInput")?.value;
+  if (!year) {
+    alert("Please enter a year");
+    return;
   }
-}
+  localStorage.setItem("selectedYear", year);
+  window.location.href = "timeline.html";
+});
 
 function displayEvents(events) {
   timeline.innerHTML = "";
