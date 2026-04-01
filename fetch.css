@@ -1,0 +1,16 @@
+body {
+  font-family: Arial;
+  text-align: center;
+  margin: 20px;
+}
+
+#timeline {
+  margin-top: 20px;
+}
+
+.event {
+  border-left: 3px solid #00bcd4;
+  margin: 15px;
+  padding-left: 10px;
+  text-align: left;
+}
