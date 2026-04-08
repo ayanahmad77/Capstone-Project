@@ -1,24 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Time Travel Timeline</title>
-  <link rel="stylesheet" href="fetch.css">
-  <script src="fetch.js"></script>
-</head>
-<body>
-  <header>
-    <h1>⏳ Time Travel Timeline</h1>
-    <nav>
-      <a href="about.html">About</a>
-      <a href="favorites.html">Favorites</a>
-    </nav>
-  </header>
+<meta charset="UTF-8">
+<title>Timeline</title>
 
-  <main>
-    <p>Enter a year to explore historical events:</p>
-    <input type="number" id="yearInput" placeholder="e.g., 1990" />
-    <button id="startBtn">Start Time Travel</button>
-  </main>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar">
+  <div class="logo">Timeline</div>
+  <div class="menu">
+    <a href="#">Home</a>
+    <a href="timeline.html">Timeline</a>
+    <a href="favorites.html">Favorites</a>
+  </div>
+  <button onclick="toggleTheme()">🌙</button>
+</nav>
+
+<section class="hero">
+  <h1 data-aos="fade-up">Explore History</h1>
+  <p data-aos="fade-up" data-aos-delay="200">Search any year and discover events</p>
+
+  <div class="search-box" data-aos="fade-up" data-aos-delay="400">
+    <input type="number" id="year" placeholder="Enter Year">
+    <button onclick="goToTimeline()">Explore</button>
+  </div>
+</section>
+
+<script>
+function goToTimeline(){
+  const year = document.getElementById("year").value;
+  if(!year) return alert("Enter a year");
+  localStorage.setItem("year", year);
+  window.location.href = "timeline.html";
+}
+
+function toggleTheme(){
+  document.body.classList.toggle("light");
+  localStorage.setItem("theme", document.body.classList.contains("light"));
+}
+
+// LOAD THEME
+if(localStorage.getItem("theme") === "true"){
+  document.body.classList.add("light");
+}
+</script>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>AOS.init({ duration: 1000, once: true });</script>
+
 </body>
 </html>

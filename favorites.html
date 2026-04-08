@@ -1,24 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Favorites</title>
-  <link rel="stylesheet" href="fetch.css">
+<title>Favorites</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <header>
-    <h1>Favorites</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="timeline.html">Timeline</a>
-      <a href="about.html">About</a>
-    </nav>
-  </header>
 
-  <main>
-    <div id="favoritesList"></div>
-  </main>
+<nav class="navbar">
+  <div class="logo">Timeline</div>
+  <div class="menu">
+    <a href="index.html">Home</a>
+    <a href="timeline.html">Timeline</a>
+  </div>
+</nav>
 
-  <script src="script-favorites.js"></script>
+<div class="container">
+  <h1>Favorites</h1>
+  <div id="favorites"></div>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>

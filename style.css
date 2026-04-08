@@ -1,0 +1,100 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #0f172a;
+  color: white;
+  transition: 0.3s;
+}
+
+/* LIGHT MODE */
+body.light {
+  background: #f1f5f9;
+  color: #111;
+}
+
+/* NAV */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px;
+  background: rgba(0,0,0,0.5);
+}
+
+body.light .navbar {
+  background: rgba(255,255,255,0.6);
+}
+
+.menu a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.7;
+}
+
+.menu a:hover {
+  opacity: 1;
+}
+
+/* HERO */
+.hero {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.hero h1 {
+  font-size: 60px;
+}
+
+/* INPUT */
+input {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+}
+
+/* BUTTON */
+button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: #38bdf8;
+  cursor: pointer;
+}
+
+/* EVENTS */
+.event-card {
+  background: #1e293b;
+  margin: 15px 0;
+  padding: 15px;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+body.light .event-card {
+  background: #e2e8f0;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+}
+.menu a.active {
+  border-bottom: 2px solid #38bdf8;
+}
+
+.event-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
