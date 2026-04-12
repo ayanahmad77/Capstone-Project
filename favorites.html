@@ -1,32 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-<title>Favorites</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Favorites</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<!-- ================= NAVBAR ================= -->
 <nav class="navbar">
   <div class="logo">⏳ Time Traveller</div>
+
   <div class="menu">
     <a href="index.html">Home</a>
     <a href="timeline.html">Timeline</a>
+    <a href="favorites.html" class="active">Favorites</a>
     <a href="about.html">About</a>
   </div>
-      <button onclick="toggleTheme()">🌙</button>
-<script src="app.js"></script>
+
+  <!-- 🌙 Theme Button -->
+  <button onclick="toggleTheme()">🌙</button>
 </nav>
 
+<!-- ================= MAIN ================= -->
 <div class="container">
   <h1>Favorites</h1>
   <div id="favorites"></div>
 </div>
 
+<!-- ✅ ONLY ONE SCRIPT (IMPORTANT) -->
 <script src="app.js"></script>
+
+<!-- ================= FOOTER ================= -->
 <footer style="text-align:center; padding:20px; opacity:0.6;">
   Made by Ayan Ahmad | History Timeline Project
 </footer>
+
 </body>
 </html>
