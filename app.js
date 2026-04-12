@@ -1,3 +1,31 @@
+// ================= THEME (FULLY FIXED) =================
+
+// APPLY SAVED THEME
+const isSavedLight = localStorage.getItem("theme") === "true";
+
+if (isSavedLight) {
+  document.body.classList.add("light");
+}
+
+// APPLY ICON AFTER LOAD
+window.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("button[onclick='toggleTheme()']")
+    .forEach(btn => btn.textContent = isSavedLight ? "☀️" : "🌙");
+});
+
+// TOGGLE THEME
+function toggleTheme() {
+  document.body.classList.toggle("light");
+
+  const isLight = document.body.classList.contains("light");
+  localStorage.setItem("theme", isLight);
+
+  document.querySelectorAll("button[onclick='toggleTheme()']")
+    .forEach(btn => btn.textContent = isLight ? "☀️" : "🌙");
+}
+
+
+// ================= ELEMENTS =================
 const timeline = document.getElementById("timeline");
 const searchInput = document.getElementById("search");
 const sortSelect = document.getElementById("sort");
@@ -9,10 +37,12 @@ let filteredData = [];
 let currentPage = 1;
 const itemsPerPage = 4;
 
-// AUTO FILL YEAR
+
+// ================= AUTO FILL YEAR =================
 if (yearInput && localStorage.getItem("year")) {
   yearInput.value = localStorage.getItem("year");
 }
+
 
 // ================= FETCH EVENTS =================
 async function loadEvents() {
@@ -51,13 +81,14 @@ async function loadEvents() {
   }
 }
 
+
 // ================= RENDER =================
 function render(data) {
   const start = (currentPage - 1) * itemsPerPage;
   const paginatedData = data.slice(start, start + itemsPerPage);
 
   timeline.innerHTML = paginatedData.map(e => `
-    <div class="event-card" data-aos="fade-up">
+    <div class="event-card">
       <img src="${e.img}">
       <div class="event-content">
         <h3>${e.year}</h3>
@@ -73,6 +104,7 @@ function render(data) {
   renderPagination(data.length);
 }
 
+
 // ================= FAVORITES =================
 function toggleFav(text) {
   let fav = JSON.parse(localStorage.getItem("fav") || "[]");
@@ -85,10 +117,11 @@ function toggleFav(text) {
 
   localStorage.setItem("fav", JSON.stringify(fav));
 
-  render(filteredData); // 🔥 instant UI update
+  render(filteredData);
 }
 
-// SHOW FAVORITES PAGE
+
+// ================= SHOW FAVORITES PAGE =================
 if (favContainer) {
   const fav = JSON.parse(localStorage.getItem("fav") || "[]");
 
@@ -96,6 +129,7 @@ if (favContainer) {
     ? fav.map(f => `<div class="event-card"><p>${f}</p></div>`).join("")
     : "<p>No favorites yet</p>";
 }
+
 
 // ================= SEARCH (Debounce) =================
 function debounce(func, delay) {
@@ -119,6 +153,7 @@ if (searchInput) {
   }, 300);
 }
 
+
 // ================= SORT =================
 if (sortSelect) {
   sortSelect.onchange = () => {
@@ -135,6 +170,7 @@ if (sortSelect) {
     render(filteredData);
   };
 }
+
 
 // ================= PAGINATION =================
 function renderPagination(totalItems) {

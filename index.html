@@ -20,7 +20,8 @@
     <a href="favorites.html">Favorites</a>
     <a href="about.html">About</a>
   </div>
-  <button onclick="toggleTheme()">🌙</button>
+      <button onclick="toggleTheme()">🌙</button>
+<script src="app.js"></script>
 </nav>
 
 <section class="hero">
@@ -32,24 +33,6 @@
     <button onclick="goToTimeline()">Explore</button>
   </div>
 </section>
-
-<script>
-function goToTimeline(){
-  const year = document.getElementById("year").value;
-  if(!year) return alert("Enter a year");
-  localStorage.setItem("year", year);
-  window.location.href = "timeline.html";
-}
-
-function toggleTheme(){
-  document.body.classList.toggle("light");
-  localStorage.setItem("theme", document.body.classList.contains("light"));
-}
-
-if(localStorage.getItem("theme") === "true"){
-  document.body.classList.add("light");
-}
-</script>
 
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>AOS.init({ duration: 1000, once: true });</script>
