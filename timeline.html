@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <title>Timeline</title>
 
@@ -11,28 +12,29 @@
 <body>
 
 <nav class="navbar">
-  <div class="logo">Timeline</div>
+  <div class="logo">⏳ Time Traveller</div>
   <div class="menu">
     <a href="index.html">Home</a>
     <a href="favorites.html">Favorites</a>
+    <a href="about.html">About</a>
   </div>
 </nav>
 
 <div class="container">
   <h1>Timeline</h1>
 
-<div class="controls">
+  <div class="controls">
+    <input type="number" id="yearInput" placeholder="Enter Year">
+    <button onclick="loadEvents()">Fetch Events</button>
 
-  <input type="number" id="yearInput" placeholder="Enter Year">
-  <button onclick="loadEvents()">Fetch Events</button>
+    <input type="text" id="search" placeholder="Search events...">
 
-  <select id="sort">
-    <option value="">Sort</option>
-    <option value="asc">A → Z</option>
-    <option value="desc">Z → A</option>
-  </select>
-
-</div>
+    <select id="sort">
+      <option value="">Sort</option>
+      <option value="asc">A → Z</option>
+      <option value="desc">Z → A</option>
+    </select>
+  </div>
 
   <div id="timeline"></div>
 </div>
@@ -40,6 +42,8 @@
 <script src="app.js"></script>
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>AOS.init({ duration: 800 });</script>
-
+<footer style="text-align:center; padding:20px; opacity:0.6;">
+  Made by Ayan Ahmad | History Timeline Project
+</footer>
 </body>
 </html>

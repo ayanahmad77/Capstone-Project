@@ -1,90 +1,108 @@
 const timeline = document.getElementById("timeline");
 const searchInput = document.getElementById("search");
 const sortSelect = document.getElementById("sort");
+const favContainer = document.getElementById("favorites");
+const yearInput = document.getElementById("yearInput");
 
 let eventsData = [];
+let filteredData = [];
+let currentPage = 1;
+const itemsPerPage = 4;
 
-// ================= FETCH BETTER EVENTS =================
+// AUTO FILL YEAR
+if (yearInput && localStorage.getItem("year")) {
+  yearInput.value = localStorage.getItem("year");
+}
+
+// ================= FETCH EVENTS =================
 async function loadEvents() {
-  const year = document.getElementById("yearInput")?.value || localStorage.getItem("year");
-
+  const year = yearInput.value;
   if (!year) return alert("Enter a year");
 
-  timeline.innerHTML = `
-    <div class="event-card">Loading...</div>
-    <div class="event-card">Loading...</div>
-  `;
+  timeline.innerHTML = `<p>Loading...</p>`;
 
   try {
-    // Step 1: search pages
-    const res = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${year}%20history&format=json&origin=*`);
+    const res = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${year}&format=json&origin=*`);
     const data = await res.json();
 
     const results = data.query.search.slice(0, 8);
 
-    // Step 2: get detailed summaries (with images)
     const detailed = await Promise.all(
       results.map(async (item) => {
-        const title = item.title;
+        const page = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${item.title}`);
+        const info = await page.json();
 
-        try {
-          const pageRes = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
-          const pageData = await pageRes.json();
-
-          return {
-            year,
-            text: pageData.extract || title,
-            img: pageData.thumbnail?.source || "https://picsum.photos/200"
-          };
-        } catch {
-          return {
-            year,
-            text: title,
-            img: "https://picsum.photos/200"
-          };
-        }
+        return {
+          year,
+          text: info.extract || item.title,
+          img: info.thumbnail?.source || "https://picsum.photos/200"
+        };
       })
     );
 
+    currentPage = 1;
     eventsData = detailed;
-    render(eventsData);
+    filteredData = detailed;
 
-  } catch (err) {
+    render(filteredData);
+
+  } catch {
     timeline.innerHTML = "<p>Error loading data</p>";
-    console.error(err);
   }
 }
 
 // ================= RENDER =================
 function render(data) {
-  timeline.innerHTML = data.map((e, i) => `
-    <div class="event-card">
-      <img src="${e.img}" class="event-img">
+  const start = (currentPage - 1) * itemsPerPage;
+  const paginatedData = data.slice(start, start + itemsPerPage);
+
+  timeline.innerHTML = paginatedData.map(e => `
+    <div class="event-card" data-aos="fade-up">
+      <img src="${e.img}">
       <div class="event-content">
         <h3>${e.year}</h3>
         <p>${e.text}</p>
-        <button onclick="saveFav('${e.text.replace(/'/g, "")}')">❤️ Save</button>
+
+        <button onclick="toggleFav('${e.text.replace(/'/g,"")}')">
+          ${JSON.parse(localStorage.getItem("fav") || "[]").includes(e.text) ? "💖" : "🤍"}
+        </button>
       </div>
     </div>
-  `).join('');
+  `).join("");
+
+  renderPagination(data.length);
 }
 
 // ================= FAVORITES =================
-function saveFav(text) {
+function toggleFav(text) {
   let fav = JSON.parse(localStorage.getItem("fav") || "[]");
 
-  if (!fav.includes(text)) {
+  if (fav.includes(text)) {
+    fav = fav.filter(f => f !== text);
+  } else {
     fav.push(text);
-    localStorage.setItem("fav", JSON.stringify(fav));
   }
+
+  localStorage.setItem("fav", JSON.stringify(fav));
+
+  render(filteredData); // 🔥 instant UI update
 }
 
-// ================= SEARCH =================
+// SHOW FAVORITES PAGE
+if (favContainer) {
+  const fav = JSON.parse(localStorage.getItem("fav") || "[]");
+
+  favContainer.innerHTML = fav.length
+    ? fav.map(f => `<div class="event-card"><p>${f}</p></div>`).join("")
+    : "<p>No favorites yet</p>";
+}
+
+// ================= SEARCH (Debounce) =================
 function debounce(func, delay) {
   let timeout;
-  return function (...args) {
+  return (...args) => {
     clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(this, args), delay);
+    timeout = setTimeout(() => func(...args), delay);
   };
 }
 
@@ -92,16 +110,19 @@ if (searchInput) {
   searchInput.oninput = debounce(() => {
     const val = searchInput.value.toLowerCase();
 
-    render(eventsData.filter(e =>
+    filteredData = eventsData.filter(e =>
       e.text.toLowerCase().includes(val)
-    ));
+    );
+
+    currentPage = 1;
+    render(filteredData);
   }, 300);
 }
 
 // ================= SORT =================
 if (sortSelect) {
   sortSelect.onchange = () => {
-    let sorted = [...eventsData];
+    let sorted = [...filteredData];
 
     if (sortSelect.value === "asc") {
       sorted.sort((a, b) => a.text.localeCompare(b.text));
@@ -109,11 +130,32 @@ if (sortSelect) {
       sorted.sort((a, b) => b.text.localeCompare(a.text));
     }
 
-    render(sorted);
+    filteredData = sorted;
+    currentPage = 1;
+    render(filteredData);
   };
 }
 
-// ================= AUTO LOAD =================
-if (timeline) {
-  loadEvents();
+// ================= PAGINATION =================
+function renderPagination(totalItems) {
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  let buttons = `<div style="margin-top:20px;">`;
+
+  for (let i = 1; i <= totalPages; i++) {
+    buttons += `
+      <button onclick="changePage(${i})"
+        style="margin:5px; ${i === currentPage ? 'background:#6366f1;' : ''}">
+        ${i}
+      </button>`;
+  }
+
+  buttons += `</div>`;
+
+  timeline.innerHTML += buttons;
+}
+
+function changePage(page) {
+  currentPage = page;
+  render(filteredData);
 }

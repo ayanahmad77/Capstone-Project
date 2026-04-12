@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <title>Timeline</title>
 
@@ -12,11 +13,12 @@
 <body>
 
 <nav class="navbar">
-  <div class="logo">Timeline</div>
+  <div class="logo">⏳ Time Traveller</div>
   <div class="menu">
-    <a href="#">Home</a>
+    <a href="#" class="active">Home</a>
     <a href="timeline.html">Timeline</a>
     <a href="favorites.html">Favorites</a>
+    <a href="about.html">About</a>
   </div>
   <button onclick="toggleTheme()">🌙</button>
 </nav>
@@ -44,7 +46,6 @@ function toggleTheme(){
   localStorage.setItem("theme", document.body.classList.contains("light"));
 }
 
-// LOAD THEME
 if(localStorage.getItem("theme") === "true"){
   document.body.classList.add("light");
 }
@@ -52,6 +53,8 @@ if(localStorage.getItem("theme") === "true"){
 
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>AOS.init({ duration: 1000, once: true });</script>
-
+<footer style="text-align:center; padding:20px; opacity:0.6;">
+  Made by Ayan Ahmad | History Timeline Project
+</footer>
 </body>
 </html>
